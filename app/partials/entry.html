@@ -1,0 +1,91 @@
+<div class="entry-details page-inner ">
+	<div class="row" >
+		<div class="page-title col-md-7">
+			<h1>
+				<a ng-if="!nonav" href="#">{{'entry.Live_Content' | translate }}</a>
+				<span ng-if="nonav">{{'entry.Live_Content' | translate }}</span>
+				 > {{entry.name}}
+			</h1>
+		</div>
+		<div class="date-range col-md-5">{{reportStartTime | date : 'EEE MMM dd yyyy HH:mm:ss'}} - {{nowTime | date : 'EEE MMM dd yyyy HH:mm:ss'}}
+			<div class="btn-group">
+				<button type="button" class="btn btn-link dropdown-toggle stick-right" data-toggle="dropdown" aria-expanded="false">
+					{{'export_to_csv' | translate}} <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu csv" role="menu">
+					<li><a href ng-click="exportReportType='audience'">{{'entry.report_timeline' | translate}}</a></li>
+				    <li><a href ng-click="exportReportType='location'">{{'entry.report_location' | translate}}</a></li>
+				    <li><a href ng-click="exportReportType='syndication'">{{'entry.report_syndication' | translate}}</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	
+	<hr class="section-title" />
+	
+	<!-- Aggregates -->
+	<div class="row aggregates">
+		<div class="aggregate-item col-md-3" ng-repeat="agg in aggregates">
+			<div class="tooltip-wrap" title="{{agg.tooltip | translate}}" >
+				<div class="agg-data" ><span fitfontsize="{{agg | formatAgg}}"></span></div>
+				<div class="agg-info">{{agg.title | translate}}</div>
+			</div>
+		</div>
+	</div>
+	
+	<h2 class="section-title">{{'entry.Audience' | translate}}</h2>
+	<hr class="section-title" />
+	
+	<!-- Graph -->
+	<div class="row">
+		<div class="col-md-12 graphic-content graphi">
+			<div rgraph class="full-width full-height" ></div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-6">
+			<h2 class="section-title">{{'entry.ID' | translate}}: {{entry.id}}</h2>
+			<hr class="section-title" />
+			<!-- player -->
+			<div class="inline-component">
+				<div kplayer class="full-width full-height"></div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<h2 class="section-title tooltip-wrap" title="{{'entry.Location_tt' | translate}}">{{'entry.Location' | translate}}</h2>
+			<hr class="section-title" />
+			<!-- map -->
+			<div class="inline-component">
+				<div olmap class="full-width full-height" ></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- referals -->
+	<div class="row">
+		<div class="col-md-12">
+			<h2 class="section-title tooltip-wrap" data-placement="bottom" title="{{'entry.Top_referals_tt' | translate}}">{{'entry.Top_referals' | translate}}</h2>
+			<hr class="section-title" />
+			<table class="table table-striped" >
+				<thead>
+					<tr>
+						<th class="col-md-1">#</th>
+						<th class="col-md-9">{{'entry.Domain' | translate}}</th>
+						<th class="col-md-1">{{'entry.Visits' | translate}}</th>
+						<th class="col-md-1">{{'entry.of_total' | translate}}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="ref in referals" >
+						<td >{{$index + 1}}.</td>
+						<td title="{{ref.domain}}" class="tooltip-wrap ellipsis" data-container="body" data-animation="false"><a href="{{ref.domain}}" target="_blank">{{ref.domain}}</a></td>
+						<td >{{ref.visits}}</td>
+						<td >{{ref.percents | percents}} %</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

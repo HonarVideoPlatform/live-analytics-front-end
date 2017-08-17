@@ -1,0 +1,26 @@
+{
+  "name": "LiveAnalytics",
+  "version": "2.6.0",
+  "main": "Gruntfile.js",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "~0.4.0",
+    "grunt-contrib-clean": "^0.5.0",
+    "grunt-contrib-concat": "*",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-contrib-cssmin": "~0.7.0",
+    "grunt-contrib-uglify": "*",
+    "grunt-remove": "^0.1.0",
+    "grunt-shell": "~0.2.2",
+    "grunt-string-replace": "^0.2.7"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kaltura/LiveAnalytics.git"
+  },
+  "author": "atarsh",
+  "readmeFilename": "README.md"
+}

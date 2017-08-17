@@ -1,0 +1,80 @@
+<!doctype html>
+<html xmlns:ng="http://angularjs.org" lang="en" id="ng-app" ng-app="liveAnalytics">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+   
+<title>Live Anaytics</title>
+
+
+<link type="text/css" rel="stylesheet" href="css/vendor.css" />
+<link type="text/css" rel="stylesheet" href="css/app.css" />
+
+
+</head>
+<body >
+<div class="kmcSubNav" ng-class="{hidden : nonav}" ng-cloak>
+	<a href="javascript:navigateToFlashAnalytics('contentDashboard')" class="btn">{{'main.Content_Reports' | translate}}</a>
+	<a href="javascript:navigateToFlashAnalytics('usersandCommunity')" class="btn">{{'main.Community_Reports' | translate}}</a>
+	<a href="javascript:navigateToFlashAnalytics('usageTabTitle')" class="btn">{{'main.Storage_Reports' | translate}}</a>
+	<a href="javascript:navigateToFlashAnalytics('platformReports')" class="btn">{{'main.System_Reports' | translate}}</a>
+	<a href="javascript:navigateToFlashAnalytics('liveContent')" class="btn">{{'main.Live_Reports' | translate}}</a>
+	<a href="index.html" class="btn active">{{'main.Real_Time_Reports' | translate}}</a>
+</div>
+<div class="container page">
+	<div class="view-container">
+		<div ng-view></div>
+	</div>
+	
+	<!-- player -->
+	<script>
+		window.playerLibLoaded = false;
+		
+		var oHead = document.getElementsByTagName('head').item(0);
+		var oScript= document.createElement("script");
+		oScript.type = "text/javascript";
+		var pid = window.parent.kmc.vars.partner_id;
+		var uiconfid = window.parent.kmc.vars.liveanalytics.player_id;
+		oScript.src=window.location.protocol + "//" + window.parent.kmc.vars.cdn_host + "/p/"+pid+"/sp/"+pid+"00/embedIframeJs/uiconf_id/"+uiconfid+"/partner_id/"+pid;
+		oScript.onload = plrCallback;
+		oHead.appendChild( oScript);
+		
+		function plrCallback() {
+			console.log('player loaded');
+			window.playerLibLoaded = true; // only embed when true
+		}
+		
+	</script>
+
+	<script src="js/jquery.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/bootstrap-paginator.js"></script>
+	<script src="js/bootbox.min.js"></script>
+
+	<script src="js/angular.min.js"></script>
+	<script src="js/angular-resource.min.js"></script>
+	<script src="js/angular-route.min.js"></script>
+	<!-- i18n -->
+	<script src="js/angular-translate.min.js"></script>
+	<script src="js/angular-translate-loader-static-files.min.js"></script>
+	<script src="js/angular-route.min.js.map"></script>
+	<script src="js/angular-resource.min.js.map"></script>
+	<script src="js/angular.min.js.map"></script>
+	<!-- graph, map -->
+	<script src="js/OpenLayers.js"></script>
+	<script src="js/d3.v3.js"></script>
+	<script src="js/d3.layout.min.js"></script>
+	<script src="js/rickshaw.js"></script>
+
+	<script src="js/libs.js"></script>
+	<script src="js/livea.min.js"></script>
+	<script type="text/javascript">
+    	// tell OpenLayers where the control images are
+    	// remember the trailing slash
+    	OpenLayers.ImgPath = "css/img/ol";
+    </script>
+</div>	
+</body>
+</html>

@@ -1,0 +1,99 @@
+<div class="dashboard page-inner ">
+	<div class="row" >
+		<div class="page-title col-md-7">
+			<h1>{{'dashboard.Live_Content_36' | translate}}</h1>
+		</div>
+		<div class="date-range col-md-5">{{reportStartTime | date : 'EEE MMM dd yyyy HH:mm:ss'}} - {{nowTime | date : 'EEE MMM dd yyyy HH:mm:ss'}}</div>
+	</div>
+
+	<div class="row" >
+		<div class="col-md-10">
+			<select ng-model="boardType" >
+				<option value="liveOnly">{{'dashboard.Show_Kaltura' | translate}}</option>
+				<option value="all">{{'dashboard.Show_All_Entries' | translate}}</option>
+			</select>
+		</div>
+		<div class="col-md-2 text-right">
+			<button type="button" class="btn btn-link" ng-click="export2csv()">{{'export_to_csv' | translate}}</button>
+		</div>
+	</div>
+	
+	<hr />
+	
+	<!-- Aggregates -->
+	<div class="row aggregates">
+		<div class="aggregate-item col-md-3" ng-repeat="agg in aggregates">
+			<div class="tooltip-wrap" title="{{agg.tooltip | translate}}">
+				<div class="agg-data"><span fitfontsize="{{agg | formatAgg}}"></span></div>
+				<div class="agg-info">{{agg.title | translate}}</div>
+			</div>
+		</div>
+	</div>
+
+	<hr />
+	
+	<!-- Entries List -->
+	<div class="entries-list row">
+		<!-- Entry -->
+		<div class="entry panel panel-default col-md-6" ng-class-even="'agg-even'" ng-repeat="entry in entries">
+			<div class="panel-heading" >
+		    	<h2 class="panel-title" ellipsis>{{entry.name}}</h2>
+		  	</div>
+			<div class="panel-body">
+				<div class="entry-img">
+					<img class="img" ng-src="{{entry.thumbnailUrl}}"/><br/>
+				</div>
+				<div class="entry-info" >
+					<table>
+						<tr>
+							<td>{{(boardType == "liveOnly" ? 'dashboard.audience_inc_dvr' : 'dashboard.Plays') | translate}}:</td>
+							<td>{{(boardType == "liveOnly" ? entry.audience : entry.plays) | number:0}}</td>
+						</tr>
+						<tr>
+							<td>{{'dashboard.Peak_Audience' | translate}}:</td>
+							<td>{{entry.peakAudience | number:0}}</td>
+						</tr>
+						<tr>
+							<td>{{'dashboard.Peak_DVR_Audience' | translate}}:</td>
+							<td ng-if="entry.dvrStatus">{{entry.peakDvrAudience | number:0}}</td>
+							<td ng-if="!entry.dvrStatus">{{'main.n_a' | translate}}</td>
+						</tr>
+						<tr>
+							<td>{{'dashboard.Minutes_Viewed' | translate}}:</td>
+							<td>{{entry.secondsViewed/60 | number:0}}</td>
+						</tr>
+						<tr>
+							<td>{{'dashboard.Buffer_Time' | translate}}:</td>
+							<td>{{entry.bufferTime | number:2}}</td>
+						</tr>
+						<tr>
+							<td>{{'dashboard.Avg_Bitrate' | translate}}:</td>
+							<td>{{entry.avgBitrate | avgBitrate | number:2}}</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+			<div class="panel-footer col-md-12">
+				<div class="col-md-4">
+					<a class="btn btn-primary" href="#/entry/{{entry.entryId}}"><span class="glyphicon glyphicon-import"></span> {{'dashboard.Investigate' | translate}}</a>
+				</div>
+				<div class="col-md-8 entry-time" ng-if="entry.firstBroadcast">
+					<div class="tooltip-wrap" title="{{'dashboard.first_broadcast_tt' | translate }}">{{'dashboard.first_broadcast' | translate}}: {{entry.firstBroadcast*1000 | date : 'd MMM H:mm:ss'}}</div>
+					<div ng-show="Math.abs(entry.lastBroadcast - entry.firstBroadcast) > 10" class="tooltip-wrap" title="{{'dashboard.last_broadcast_tt' | translate }}">{{'dashboard.last_broadcast' | translate}}: {{entry.lastBroadcast*1000 | date : 'd MMM H:mm:ss'}}</div>
+					<script type="text/javascript">
+						$('.tooltip-wrap').tooltip();
+					</script> 
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<hr />
+	
+	<!-- paging -->
+	<div class="paging-wrapper">
+		<ul id="pagination" ></ul>
+	</div>
+	
+</div>
